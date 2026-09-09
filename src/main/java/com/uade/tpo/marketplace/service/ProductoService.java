@@ -57,6 +57,27 @@ public class ProductoService {
         return convertirAResponse(guardado);
     }
 
+
+    @Transactional
+public ProductoResponse modificarProducto(Long id, ProductoRequest request) {
+
+    Producto producto = productoRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+    producto.setNombre(request.getNombre());
+    producto.setDescripcion(request.getDescripcion());
+    producto.setPrecio(request.getPrecio());
+    producto.setStock(request.getStock());
+
+    List<Categoria> categorias = categoriaRepository.findAllById(request.getCategoriaIds());
+    producto.setCategorias(new HashSet<>(categorias));
+
+    Producto actualizado = productoRepository.save(producto);
+
+    return convertirAResponse(actualizado);
+}
+
+
     private ProductoResponse convertirAResponse(Producto p) {
         ProductoResponse response = new ProductoResponse();
         response.setId(p.getId());
