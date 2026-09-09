@@ -7,10 +7,11 @@ INSERT INTO categoria (nombre) VALUES ('Hogar');
 INSERT INTO categoria (nombre) VALUES ('Libros');
 INSERT INTO categoria (nombre) VALUES ('Deportes');
 
+-- Password (hasheado con BCrypt) para ambos usuarios: cambiar123
 INSERT INTO usuario (username, nombre, apellido, email, password)
-VALUES ('jperez', 'Juan', 'Perez', 'jperez@uade.edu.ar', 'cambiar123');
+VALUES ('jperez', 'Juan', 'Perez', 'jperez@uade.edu.ar', '$2a$10$B2CDbzXseC52p.fd0Tg9LevYFD5IOHIX90ylj2OGr.WzQOwa5l3wi');
 INSERT INTO usuario (username, nombre, apellido, email, password)
-VALUES ('mgomez', 'Maria', 'Gomez', 'mgomez@uade.edu.ar', 'cambiar123');
+VALUES ('mgomez', 'Maria', 'Gomez', 'mgomez@uade.edu.ar', '$2a$10$B2CDbzXseC52p.fd0Tg9LevYFD5IOHIX90ylj2OGr.WzQOwa5l3wi');
 
 INSERT INTO usuario_rol (usuario_id, rol_id) VALUES (1, 1);
 INSERT INTO usuario_rol (usuario_id, rol_id) VALUES (2, 1);
