@@ -89,6 +89,23 @@ public ProductoResponse modificarProducto(Long id, ProductoRequest request) {
 }
 
 
+    @Transactional
+    public ProductoResponse actualizarStock(Long id, Integer nuevoStock) {
+
+    Producto producto = productoRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+    if (nuevoStock == null || nuevoStock < 0) {
+        throw new IllegalArgumentException("El stock no puede ser negativo");
+    }
+
+    producto.setStock(nuevoStock);
+    Producto actualizado = productoRepository.save(producto);
+
+    return convertirAResponse(actualizado);
+}
+
+
     private ProductoResponse convertirAResponse(Producto p) {
         ProductoResponse response = new ProductoResponse();
         response.setId(p.getId());
