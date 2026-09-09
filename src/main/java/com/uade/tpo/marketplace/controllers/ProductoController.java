@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.uade.tpo.marketplace.dto.request.ImagenRequest;
 
 @RestController
-@RequestMapping("/api/productos")
+@RequestMapping("/productos")
 public class ProductoController {
 
     private final ProductoService productoService;
