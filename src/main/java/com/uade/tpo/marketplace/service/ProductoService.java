@@ -106,6 +106,34 @@ public ProductoResponse modificarProducto(Long id, ProductoRequest request) {
 }
 
 
+    @Transactional
+public ProductoResponse agregarImagen(Long productoId, ImagenRequest request) {
+
+    Producto producto = productoRepository.findById(productoId)
+            .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+    ImagenProducto imagen = new ImagenProducto(request.getUrlImagen());
+    producto.agregarImagen(imagen);
+
+    Producto actualizado = productoRepository.save(producto);
+    return convertirAResponse(actualizado);
+}
+
+@Transactional
+public void eliminarImagen(Long productoId, Long imagenId) {
+
+    Producto producto = productoRepository.findById(productoId)
+            .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+    ImagenProducto imagen = producto.getImagenes().stream()
+            .filter(img -> img.getId().equals(imagenId))
+            .findFirst()
+            .orElseThrow(() -> new RuntimeException("Imagen no encontrada en este producto"));
+
+    producto.quitarImagen(imagen);
+    productoRepository.save(producto);
+}
+
     private ProductoResponse convertirAResponse(Producto p) {
         ProductoResponse response = new ProductoResponse();
         response.setId(p.getId());
