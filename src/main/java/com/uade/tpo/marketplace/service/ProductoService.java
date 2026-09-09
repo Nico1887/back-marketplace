@@ -15,6 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import com.uade.tpo.marketplace.dto.response.ProductoListadoResponse;
 
 @Service
 public class ProductoService {
@@ -134,6 +137,28 @@ public void eliminarImagen(Long productoId, Long imagenId) {
     productoRepository.save(producto);
 }
 
+    @Transactional(readOnly = true)
+    public Page<ProductoListadoResponse> getProductosCatalogo(String nombre, Long categoriaId, Pageable pageable) {
+        return productoRepository.findCatalogo(nombre, categoriaId, pageable)
+                .map(p -> {
+                    ProductoListadoResponse res = new ProductoListadoResponse();
+                    res.setId(p.getId());
+                    res.setNombre(p.getNombre());
+                    res.setPrecio(p.getPrecio());
+                    if (!p.getImagenes().isEmpty()) {
+                        res.setImagenPortada(p.getImagenes().iterator().next().getUrlImagen());
+                    }
+                    return res;
+                });
+    }
+
+    @Transactional(readOnly = true)
+    public ProductoResponse getProductoById(Long id) {
+        Producto producto = productoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+        return convertirAResponse(producto);
+    }
+
     private ProductoResponse convertirAResponse(Producto p) {
         ProductoResponse response = new ProductoResponse();
         response.setId(p.getId());
@@ -145,6 +170,7 @@ public void eliminarImagen(Long productoId, Long imagenId) {
         response.setNombreVendedor(p.getVendedor().getNombre());
         response.setCategorias(p.getCategorias().stream().map(Categoria::getNombre).toList());
         response.setImagenes(p.getImagenes().stream().map(ImagenProducto::getUrlImagen).toList());
+        response.setDisponibleParaCarrito(p.getStock() > 0);
         return response;
     }
 }
