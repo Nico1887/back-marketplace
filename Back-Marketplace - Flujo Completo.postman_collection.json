@@ -1,0 +1,333 @@
+{
+  "info": {
+    "_postman_id": "ff6ebe48-be28-464c-824d-06233c3535b3",
+    "name": "Back-Marketplace - Flujo Completo",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "57603359"
+  },
+  "item": [
+    {
+      "name": "Registrar Vendedor",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"username\": \"vendedor_carlos\",\r\n  \"nombre\": \"Carlos\",\r\n  \"apellido\": \"Lopez\",\r\n  \"email\": \"carlos@uade.edu.ar\",\r\n  \"password\": \"password123\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/auth/register",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "auth",
+            "register"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Registrar Comprador",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"username\": \"comprador_ana\",\r\n  \"nombre\": \"Ana\",\r\n  \"apellido\": \"Gomez\",\r\n  \"email\": \"ana@uade.edu.ar\",\r\n  \"password\": \"password123\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/auth/register",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "auth",
+            "register"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login del Vendedor",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"email\": \"carlos@uade.edu.ar\",\r\n  \"password\": \"password123\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/auth/login",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Publicar Producto",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"nombre\": \"Monitor Gamer 24 Pulgadas\",\r\n  \"descripcion\": \"Monitor 144hz, panel IPS, 1ms de respuesta.\",\r\n  \"precio\": 250000.00,\r\n  \"stock\": 5,\r\n  \"categoriaId\": 1,\r\n  \"imagenes\": [\r\n    {\r\n      \"urlImagen\": \"https://placehold.co/600x400?text=Monitor+Frente\"\r\n    },\r\n    {\r\n      \"urlImagen\": \"https://placehold.co/600x400?text=Monitor+Atras\"\r\n    }\r\n  ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/productos",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "productos"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Listar Producto",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/productos",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "productos"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Listar Categorias",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/categorias",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "categorias"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Detalle del producto",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/productos/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "productos",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Agregar Producto al Carrito",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"productoId\": 1,\r\n  \"cantidad\": 2\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/carrito",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "carrito"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Agregar Producto sin stock",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"productoId\": 2,\r\n  \"cantidad\": 1\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/carrito",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "carrito"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Hacer Checkout",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/ordenes",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "ordenes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Verificar que el stock bajo",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/productos/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "productos",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Verificar Carrito vacio",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/carrito",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "carrito"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Ver historial de ordenes",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/ordenes",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "ordenes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Borrar producto",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/productos/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "productos",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Verificar orden vieja",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/ordenes/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "ordenes",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080/api",
+      "type": "string"
+    }
+  ]
+}
