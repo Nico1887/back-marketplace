@@ -78,6 +78,17 @@ public ProductoResponse modificarProducto(Long id, ProductoRequest request) {
 }
 
 
+    @Transactional
+    public void darDeBajaProducto(Long id) {
+
+    Producto producto = productoRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+    producto.setActivo(false);
+    productoRepository.save(producto);
+}
+
+
     private ProductoResponse convertirAResponse(Producto p) {
         ProductoResponse response = new ProductoResponse();
         response.setId(p.getId());
