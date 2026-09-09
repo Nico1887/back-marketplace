@@ -6,6 +6,7 @@ import com.uade.tpo.marketplace.service.ProductoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.uade.tpo.marketplace.dto.request.ImagenRequest;
 
 @RestController
 @RequestMapping("/api/productos")
@@ -42,4 +43,18 @@ public class ProductoController {
         ProductoResponse response = productoService.actualizarStock(id, cantidad);
         return ResponseEntity.ok(response);
     }
+
+@PostMapping("/{id}/imagenes")
+public ResponseEntity<ProductoResponse> agregarImagen(@PathVariable Long id,
+                                                          @RequestBody ImagenRequest request) {
+    ProductoResponse response = productoService.agregarImagen(id, request);
+    return ResponseEntity.status(HttpStatus.CREATED).body(response);
+}
+
+@DeleteMapping("/{id}/imagenes/{imagenId}")
+public ResponseEntity<Void> eliminarImagen(@PathVariable Long id, @PathVariable Long imagenId) {
+    productoService.eliminarImagen(id, imagenId);
+    return ResponseEntity.noContent().build();
+}
+
 }
