@@ -175,4 +175,15 @@ public class CatalogoControllerIntegrationTest {
                 .andExpect(jsonPath("$.content[2].nombre", is("Auriculares con cable")))
                 .andExpect(jsonPath("$.content[3].nombre", is("Zapatilla Electrica")));
     }
+
+    @Test
+    void getCatalogo_NoDevuelveProductosInactivos() throws Exception {
+        // "Mouse Inactivo" is active=false, should not be in the catalog
+        mockMvc.perform(get("/api/productos")
+                .param("page", "0")
+                .param("size", "10")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content[*].nombre", not(hasItem("Mouse Inactivo"))));
+    }
 }
