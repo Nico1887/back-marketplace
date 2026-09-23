@@ -15,4 +15,5 @@ public class ProductoResponse {
     private String nombreVendedor;
     private List<String> categorias;
     private List<String> imagenes;
+    private boolean disponibleParaCarrito;
 }
