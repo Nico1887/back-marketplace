@@ -138,8 +138,8 @@ public void eliminarImagen(Long productoId, Long imagenId) {
 }
 
     @Transactional(readOnly = true)
-    public Page<ProductoListadoResponse> getProductosCatalogo(String nombre, Long categoriaId, Pageable pageable) {
-        return productoRepository.findCatalogo(nombre, categoriaId, pageable)
+    public Page<ProductoListadoResponse> getProductosCatalogo(String nombre, Long categoriaId, java.math.BigDecimal precioMin, java.math.BigDecimal precioMax, Pageable pageable) {
+        return productoRepository.findCatalogo(nombre, categoriaId, precioMin, precioMax, pageable)
                 .map(p -> {
                     ProductoListadoResponse res = new ProductoListadoResponse();
                     res.setId(p.getId());

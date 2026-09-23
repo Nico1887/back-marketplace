@@ -59,10 +59,10 @@ class ProductoServiceTest {
 
         // Se supone que el repositorio devuelve los productos ordenados
         org.springframework.data.domain.Pageable pageable = org.springframework.data.domain.PageRequest.of(0, 10);
-        when(productoRepository.findCatalogo(null, null, pageable)).thenReturn(page);
+        when(productoRepository.findCatalogo(null, null, null, null, pageable)).thenReturn(page);
 
         org.springframework.data.domain.Page<com.uade.tpo.marketplace.dto.response.ProductoListadoResponse> response = 
-                productoService.getProductosCatalogo(null, null, pageable);
+                productoService.getProductosCatalogo(null, null, null, null, pageable);
 
         assertThat(response.getContent()).hasSize(2);
         assertThat(response.getContent().get(0).getNombre()).isEqualTo("Auriculares");

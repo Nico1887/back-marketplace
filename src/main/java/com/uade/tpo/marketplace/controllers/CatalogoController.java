@@ -29,15 +29,17 @@ public class CatalogoController {
         this.categoriaService = categoriaService;
     }
 
-    @Operation(summary = "Obtener catálogo de productos", description = "Devuelve un listado paginado de productos, con opción de filtrar por nombre o categoría. Los resultados se ordenan alfabéticamente por nombre.")
+    @Operation(summary = "Obtener catálogo de productos", description = "Devuelve un listado paginado de productos, con opción de filtrar por nombre, categoría y rango de precios. Los resultados se ordenan alfabéticamente por nombre.")
     @GetMapping("/productos")
     public ResponseEntity<Page<ProductoListadoResponse>> getCatalogo(
             @RequestParam(required = false) String nombre,
             @RequestParam(required = false) Long categoriaId,
+            @RequestParam(required = false) java.math.BigDecimal precioMin,
+            @RequestParam(required = false) java.math.BigDecimal precioMax,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(productoService.getProductosCatalogo(nombre, categoriaId, pageable));
+        return ResponseEntity.ok(productoService.getProductosCatalogo(nombre, categoriaId, precioMin, precioMax, pageable));
     }
 
     @Operation(summary = "Obtener detalle de producto", description = "Devuelve el detalle completo de un producto específico, incluyendo sus imágenes, categorías y si hay stock disponible para el carrito.")

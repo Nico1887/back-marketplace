@@ -186,4 +186,19 @@ public class CatalogoControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content[*].nombre", not(hasItem("Mouse Inactivo"))));
     }
+    @Test
+    void getCatalogo_FiltroRangoDePrecio() throws Exception {
+        // precioMin = 1500, precioMax = 3000
+        // Esperamos "Almohadon" (2000) y "Zapatilla Electrica" (1500)
+        mockMvc.perform(get("/api/productos")
+                .param("precioMin", "1500.00")
+                .param("precioMax", "3000.00")
+                .param("page", "0")
+                .param("size", "10")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content", hasSize(2)))
+                .andExpect(jsonPath("$.content[0].nombre", is("Almohadon")))
+                .andExpect(jsonPath("$.content[1].nombre", is("Zapatilla Electrica")));
+    }
 }
