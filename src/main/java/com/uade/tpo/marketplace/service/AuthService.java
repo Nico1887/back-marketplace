@@ -1,6 +1,7 @@
 package com.uade.tpo.marketplace.service;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+// 1. MODIFICAR EL IMPORT
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,11 +22,12 @@ public class AuthService {
 
     private final UsuarioRepository usuarioRepository;
     private final RolRepository rolRepository;
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final PasswordEncoder passwordEncoder;
 
-    public AuthService(UsuarioRepository usuarioRepository, RolRepository rolRepository) {
+    public AuthService(UsuarioRepository usuarioRepository, RolRepository rolRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
         this.rolRepository = rolRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
