@@ -7,8 +7,8 @@ import com.uade.tpo.marketplace.entity.Carrito;
 import com.uade.tpo.marketplace.entity.DetalleCarrito;
 import com.uade.tpo.marketplace.entity.Producto;
 import com.uade.tpo.marketplace.entity.Usuario;
+import com.uade.tpo.marketplace.exceptions.BusinessRulesException;
 import com.uade.tpo.marketplace.exceptions.ResourceNotFoundException;
-import com.uade.tpo.marketplace.exceptions.StateConflictException;
 import com.uade.tpo.marketplace.repository.CarritoRepository;
 import com.uade.tpo.marketplace.repository.DetalleCarritoRepository;
 import com.uade.tpo.marketplace.repository.ProductoRepository;
@@ -52,7 +52,7 @@ public class CarritoService {
         int cantidadFinal = cantidadActual + request.getCantidad();
 
         if (!producto.hayStock(cantidadFinal)) {
-            throw new StateConflictException("Stock insuficiente para el producto " + producto.getId());
+            throw new BusinessRulesException("Stock insuficiente para el producto " + producto.getId());
         }
 
         if (detalle == null) {
@@ -73,7 +73,7 @@ public class CarritoService {
         DetalleCarrito detalle = obtenerDetalle(carrito, productoId);
 
         if (!detalle.getProducto().hayStock(request.getCantidad())) {
-            throw new StateConflictException("Stock insuficiente para el producto " + productoId);
+            throw new BusinessRulesException("Stock insuficiente para el producto " + productoId);
         }
 
         detalle.setCantidad(request.getCantidad());
