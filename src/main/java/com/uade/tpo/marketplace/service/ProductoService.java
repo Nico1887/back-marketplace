@@ -108,6 +108,19 @@ public ProductoResponse modificarProducto(Long id, ProductoRequest request) {
     return convertirAResponse(actualizado);
 }
 
+    @Transactional
+    public void descontarStock(Long id, Integer cantidad) {
+        Producto producto = productoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+        if (producto.getStock() < cantidad) {
+            throw new RuntimeException("Stock insuficiente para el producto " + id);
+        }
+
+        producto.setStock(producto.getStock() - cantidad);
+        productoRepository.save(producto);
+    }
+
 
     @Transactional
 public ProductoResponse agregarImagen(Long productoId, ImagenRequest request) {
