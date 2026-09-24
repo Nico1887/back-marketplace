@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@Tag(name = "Ordenes", description = "Endpoints para el checkout y visualización de órdenes de compra")
+@Tag(name = "Ordenes", description = "Endpoints para el checkout y visualizacion de ordenes de compra")
 public class OrdenController {
 
     private final OrdenCompraService ordenCompraService;
@@ -28,9 +28,15 @@ public class OrdenController {
         return ResponseEntity.status(HttpStatus.CREATED).body(orden);
     }
 
-    @Operation(summary = "Obtener historial de órdenes", description = "Devuelve el historial de órdenes de compra del usuario ordenado por fecha de forma descendente.")
+    @Operation(summary = "Obtener historial de ordenes", description = "Devuelve el historial de ordenes de compra del usuario ordenado por fecha de forma descendente.")
     @GetMapping("/ordenes/usuarios/{usuarioId}")
     public ResponseEntity<List<OrdenResponse>> getOrdenesByUsuario(@PathVariable Long usuarioId) {
         return ResponseEntity.ok(ordenCompraService.getOrdenesByUsuario(usuarioId));
+    }
+
+    @Operation(summary = "Obtener detalle de orden", description = "Devuelve el detalle de una orden de compra especifica de un usuario.")
+    @GetMapping("/ordenes/{ordenId}/usuarios/{usuarioId}")
+    public ResponseEntity<OrdenResponse> getOrdenById(@PathVariable Long usuarioId, @PathVariable Long ordenId) {
+        return ResponseEntity.ok(ordenCompraService.getOrdenById(usuarioId, ordenId));
     }
 }

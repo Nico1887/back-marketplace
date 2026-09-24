@@ -75,4 +75,13 @@ public class OrdenCompraService {
                 .map(OrdenResponse::from)
                 .toList();
     }
+
+    @Transactional(readOnly = true)
+    public OrdenResponse getOrdenById(Long usuarioId, Long ordenId) {
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        OrdenCompra orden = ordenCompraRepository.findByUsuarioAndId(usuario, ordenId)
+                .orElseThrow(() -> new RuntimeException("Orden no encontrada"));
+        return OrdenResponse.from(orden);
+    }
 }
