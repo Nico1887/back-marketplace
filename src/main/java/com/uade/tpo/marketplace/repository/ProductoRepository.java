@@ -3,9 +3,13 @@ package com.uade.tpo.marketplace.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.uade.tpo.marketplace.entity.Producto;
 import java.util.List;
+import java.util.Optional;
+
+import jakarta.persistence.LockModeType;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -28,5 +32,11 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
                                 @Param("precioMin") java.math.BigDecimal precioMin, 
                                 @Param("precioMax") java.math.BigDecimal precioMax, 
                                 Pageable pageable);
+
+    // Bloquea la fila del producto hasta que termine la transaccion, para que dos compras
+    // simultaneas no descuenten el mismo stock a la vez.
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("SELECT p FROM Producto p WHERE p.id = :id")
+    Optional<Producto> findByIdParaActualizarStock(@Param("id") Long id);
 
 }
