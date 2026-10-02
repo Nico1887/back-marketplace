@@ -1,0 +1,285 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --ground:#eceef2; --surface:#f7f8fa; --surface-2:#ffffff;
+    --ink:#1a1d24; --muted:#5d626c; --faint:#8a8f99;
+    --rule:#d4d8df; --rule-soft:#e3e6ec;
+    --accent:#b45309; --accent-soft:#fdecd6; --accent-ink:#7a3906;
+    --good:#15803d; --warn:#b45309; --bad:#b91c1c;
+    --good-soft:#dcf2e3; --warn-soft:#fdecd6; --bad-soft:#fbe0e0;
+    --p1:#2563eb; --p2:#7c3aed; --p3:#0d9488; --p4:#db2777; --p5:#b45309; --p6:#4b5563;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#13151a; --surface:#1b1e25; --surface-2:#22262f;
+      --ink:#e6e8ee; --muted:#9aa0ac; --faint:#6b7280;
+      --rule:#2c313a; --rule-soft:#232831;
+      --accent:#f59e0b; --accent-soft:#3a2a10; --accent-ink:#fbbf24;
+      --good:#4ade80; --warn:#f59e0b; --bad:#f87171;
+      --good-soft:#14321f; --warn-soft:#3a2a10; --bad-soft:#3a1818;
+      --p1:#60a5fa; --p2:#a78bfa; --p3:#2dd4bf; --p4:#f472b6; --p5:#f59e0b; --p6:#9ca3af;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#13151a; --surface:#1b1e25; --surface-2:#22262f;
+    --ink:#e6e8ee; --muted:#9aa0ac; --faint:#6b7280;
+    --rule:#2c313a; --rule-soft:#232831;
+    --accent:#f59e0b; --accent-soft:#3a2a10; --accent-ink:#fbbf24;
+    --good:#4ade80; --warn:#f59e0b; --bad:#f87171;
+    --good-soft:#14321f; --warn-soft:#3a2a10; --bad-soft:#3a1818;
+    --p1:#60a5fa; --p2:#a78bfa; --p3:#2dd4bf; --p4:#f472b6; --p5:#f59e0b; --p6:#9ca3af;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--ground);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+  .display{font-family:"Fraunces",Georgia,serif}
+  code.i{font-family:"IBM Plex Mono",monospace;font-size:.86em;background:var(--surface-2);border:1px solid var(--rule-soft);border-radius:3px;padding:1px 5px;color:var(--accent-ink)}
+
+  .wrap{max-width:920px;margin:0 auto;padding:48px 24px 96px}
+  @media (max-width:600px){.wrap{padding:32px 18px 64px}}
+
+  .hero{margin-bottom:48px;padding-bottom:28px;border-bottom:1px solid var(--rule)}
+  .hero .kicker{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:0 0 16px}
+  .hero h1{font-family:"Fraunces",serif;font-weight:500;font-size:clamp(34px,5.5vw,48px);line-height:1.05;letter-spacing:-.02em;margin:0 0 14px;text-wrap:balance}
+  .hero .lede{font-size:17px;line-height:1.5;color:var(--muted);max-width:62ch;margin:0}
+
+  section{margin-bottom:52px;scroll-margin-top:24px}
+  .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.14em;color:var(--accent);margin:0 0 8px}
+  h2{font-family:"Fraunces",serif;font-weight:500;font-size:27px;line-height:1.15;margin:0 0 18px;letter-spacing:-.01em;text-wrap:balance}
+  h3{font-family:"IBM Plex Sans",sans-serif;font-weight:600;font-size:16px;margin:18px 0 8px}
+  p{margin:0 0 12px}
+  ul.t{margin:6px 0;padding-left:18px}
+  ul.t li{margin:3px 0}
+
+  /* track card */
+  .track{background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:0;margin-bottom:18px;overflow:hidden}
+  .track-head{display:flex;align-items:center;gap:14px;padding:16px 20px;border-bottom:1px solid var(--rule-soft)}
+  .badge{width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:19px;flex:none}
+  .track-head .title{font-family:"IBM Plex Sans",sans-serif;font-weight:600;font-size:17px;margin:0}
+  .track-head .role{font-size:13px;color:var(--muted);margin:2px 0 0}
+  .track-body{padding:16px 20px}
+  .track-body h3{margin-top:4px}
+  .label{font-family:"IBM Plex Mono",monospace;font-size:10.5px;font-weight:500;text-transform:uppercase;letter-spacing:.1em;color:var(--faint);margin:14px 0 4px}
+  .files{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--muted);line-height:1.7}
+  .deps{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .dep{font-family:"IBM Plex Mono",monospace;font-size:11px;padding:3px 8px;border-radius:4px;border:1px solid var(--rule)}
+  .dep.none{color:var(--good);border-color:var(--good)}
+  .dep.wait{color:var(--warn);border-color:var(--warn)}
+  .dep.block{color:var(--bad);border-color:var(--bad)}
+  .done{background:var(--good-soft);border-left:3px solid var(--good);padding:8px 12px;margin-top:12px;font-size:13.5px;border-radius:0 4px 4px 0}
+  .done b{color:var(--good)}
+
+  /* phases */
+  .phases{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
+  @media (max-width:720px){.phases{grid-template-columns:1fr}}
+  .phase{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:14px}
+  .phase .ph{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin:0 0 8px}
+  .phase .items{font-size:13px;line-height:1.5}
+  .phase .items b{font-weight:600}
+  .arrow{display:flex;align-items:center;justify-content:center;color:var(--faint);font-size:20px}
+  @media (max-width:720px){.arrow{transform:rotate(90deg);padding:4px 0}}
+
+  /* matrix table */
+  .tbl{width:100%;border-collapse:collapse;font-size:13.5px;margin:8px 0}
+  .tbl th,.tbl td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+  .tbl th{font-family:"IBM Plex Mono",monospace;font-size:10.5px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);border-bottom:1px solid var(--rule)}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl code{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--accent-ink)}
+  .scrollx{overflow-x:auto}
+  .tag{font-family:"IBM Plex Mono",monospace;font-size:10.5px;padding:2px 7px;border-radius:999px;white-space:nowrap}
+  .tag.pub{background:var(--good-soft);color:var(--good)}
+  .tag.auth{background:var(--warn-soft);color:var(--warn)}
+  .tag.owner{background:var(--accent-soft);color:var(--accent-ink)}
+
+  .note{font-size:13.5px;color:var(--muted);border-left:2px solid var(--accent);padding:4px 0 4px 14px;margin:12px 0}
+  .risk{list-style:none;padding:0;margin:8px 0;counter-reset:r}
+  .risk li{counter-increment:r;display:grid;grid-template-columns:24px 1fr;gap:10px;padding:10px 0;border-bottom:1px solid var(--rule-soft);font-size:14px}
+  .risk li:last-child{border-bottom:none}
+  .risk li::before{content:counter(r);font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--bad);font-weight:500}
+  .risk li b{font-weight:600}
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <p class="kicker">Plan de implementación · 6 personas</p>
+    <h1 class="display">Autorización, Login y Validación de tokens</h1>
+    <p class="lede">Sobre <code class="i">back-marketplace</code> (Spring Boot 4.1.1, Java 17): login que emite JWT, filtro de validación por request y autorización de endpoints por rol. Stateless, sin sesión server-side.</p>
+  </header>
+
+  <section>
+    <p class="eyebrow">Matriz de autorización</p>
+    <h2>Qué endpoint pide qué</h2>
+    <div class="scrollx">
+    <table class="tbl">
+      <thead><tr><th>Endpoint</th><th>Acceso</th></tr></thead>
+      <tbody>
+        <tr><td><code>POST /auth/register</code>, <code>POST /auth/login</code></td><td><span class="tag pub">público</span></td></tr>
+        <tr><td><code>GET /api/productos*</code> (catálogo), <code>GET /api/categorias</code></td><td><span class="tag pub">público</span></td></tr>
+        <tr><td>Swagger, H2 console</td><td><span class="tag pub">público</span></td></tr>
+        <tr><td><code>GET /usuarios/{id}</code></td><td><span class="tag owner">mismo usuario o admin</span></td></tr>
+        <tr><td><code>POST/PUT/DELETE /productos/**</code>, <code>PATCH /productos/{id}/stock</code></td><td><span class="tag owner">owner del producto o admin</span></td></tr>
+        <tr><td><code>/carrito/usuarios/{usuarioId}/**</code></td><td><span class="tag owner">mismo usuario</span></td></tr>
+        <tr><td>Todo lo demás</td><td><span class="tag auth">autenticado</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="note">Previo: fixear el bug de doble <code class="i">/api</code> en <code class="i">CatalogoController</code> — sino el whitelist no matchea y el catálogo queda protegido.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">Asignación</p>
+    <h2>Seis tracks en paralelo</h2>
+
+    <!-- P1 -->
+    <div class="track">
+      <div class="track-head"><div class="badge" style="background:color-mix(in srgb,var(--p1) 18%,transparent);color:var(--p1)">🔧</div><div><p class="title">P1 · Infraestructura Spring Security</p><p class="role">Base de todo. Sin dependencias.</p></div></div>
+      <div class="track-body">
+        <h3>Tareas</h3>
+        <ul class="t">
+          <li>Agregar dependencias en <code class="i">pom.xml</code> (<code class="i">spring-boot-starter-security</code> + <code class="i">jjwt</code>).</li>
+          <li>Crear <code class="i">config/SecurityConfig.java</code>: <code class="i">SecurityFilterChain</code> con CSRF off, CORS integrado, <code class="i">STATELESS</code>, exception handlers de P3/P5, whitelist de paths públicos, <code class="i">addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter)</code>.</li>
+          <li><code class="i">PasswordEncoder</code> bean (<code class="i">BCryptPasswordEncoder</code>) — refactorizar <code class="i">AuthService</code> para inyectarlo en vez de <code class="i">new BCryptPasswordEncoder()</code>.</li>
+          <li>Coordinar el whitelist exacto con P5.</li>
+        </ul>
+        <p class="label">Archivos</p><p class="files">pom.xml · config/SecurityConfig.java · service/AuthService.java</p>
+        <p class="label">Depende / Bloquea</p>
+        <div class="deps"><span class="dep none">dep: nadie</span><span class="dep block">bloquea: P3, P5</span></div>
+        <div class="done"><b>Done:</b> la app levanta, endpoints públicos responden sin token, el resto devuelve 401 (P3 completa el filtro).</div>
+      </div>
+    </div>
+
+    <!-- P2 -->
+    <div class="track">
+      <div class="track-head"><div class="badge" style="background:color-mix(in srgb,var(--p2) 18%,transparent);color:var(--p2)">🔑</div><div><p class="title">P2 · JWT: generación y validación</p><p class="role">Núcleo del token. Sin dependencias.</p></div></div>
+      <div class="track-body">
+        <h3>Tareas</h3>
+        <ul class="t">
+          <li>Crear <code class="i">service/JwtService.java</code>:</li>
+          <li style="list-style:none;margin-left:14px"><code class="i">generateToken(Usuario)</code> → claims: sub=username, roles, iat, exp</li>
+          <li style="list-style:none;margin-left:14px"><code class="i">extractUsername(token)</code>, <code class="i">extractRoles(token)</code></li>
+          <li style="list-style:none;margin-left:14px"><code class="i">isTokenValid(token)</code> (firma + expiración)</li>
+          <li>Leer <code class="i">JWT_SECRET</code> y <code class="i">JWT_EXPIRATION_MS</code> desde properties/env.</li>
+          <li>Manejar excepciones de jjwt (<code class="i">ExpiredJwtException</code>, <code class="i">SignatureException</code>…) y mapearlas para P3.</li>
+        </ul>
+        <p class="label">Archivos</p><p class="files">service/JwtService.java · application.properties · application-prod.properties</p>
+        <p class="label">Depende / Bloquea</p>
+        <div class="deps"><span class="dep none">dep: nadie</span><span class="dep block">bloquea: P3, P4</span></div>
+        <div class="done"><b>Done:</b> tests round-trip generate→extract; token inválido/expirado detectado.</div>
+      </div>
+    </div>
+
+    <!-- P3 -->
+    <div class="track">
+      <div class="track-head"><div class="badge" style="background:color-mix(in srgb,var(--p3) 18%,transparent);color:var(--p3)">🛡️</div><div><p class="title">P3 · Filtro JWT + AuthenticationEntryPoint</p><p class="role">Valida token en cada request y setea el contexto.</p></div></div>
+      <div class="track-body">
+        <h3>Tareas</h3>
+        <ul class="t">
+          <li>Crear <code class="i">security/JwtAuthenticationFilter.java</code> (<code class="i">OncePerRequestFilter</code>): lee <code class="i">Authorization: Bearer &lt;token&gt;</code>; si no hay token deja pasar; si hay → valida con JwtService, carga <code class="i">UserDetails</code> (P4), setea <code class="i">SecurityContextHolder</code>; token inválido → delega al EntryPoint.</li>
+          <li>Crear <code class="i">security/CustomAuthenticationEntryPoint.java</code> → 401 JSON consistente con <code class="i">ErrorResponse</code>.</li>
+          <li>Registrar el filtro en <code class="i">SecurityConfig</code> de P1.</li>
+        </ul>
+        <p class="label">Archivos</p><p class="files">security/JwtAuthenticationFilter.java · security/CustomAuthenticationEntryPoint.java</p>
+        <p class="label">Depende / Bloquea</p>
+        <div class="deps"><span class="dep wait">dep: P1, P2, P4</span><span class="dep block">bloquea: P6</span></div>
+        <p class="note" style="margin:6px 0">Puede arrancar con stubs de P2/P4 y integrar cuando estén.</p>
+        <div class="done"><b>Done:</b> token válido setea contexto; inválido/expirado → 401 JSON; sin token a endpoint protegido → 401.</div>
+      </div>
+    </div>
+
+    <!-- P4 -->
+    <div class="track">
+      <div class="track-head"><div class="badge" style="background:color-mix(in srgb,var(--p4) 18%,transparent);color:var(--p4)">👤</div><div><p class="title">P4 · UserDetailsService + refactor Login</p><p class="role">Puente Usuario ↔ Spring Security + emite token.</p></div></div>
+      <div class="track-body">
+        <h3>Tareas</h3>
+        <ul class="t">
+          <li>Crear <code class="i">security/CustomUserDetailsService.java</code>: <code class="i">loadUserByUsername</code> → busca en <code class="i">UsuarioRepository</code> → mapea a <code class="i">User</code> con authorities desde roles; <code class="i">UsernameNotFoundException</code> si no existe.</li>
+          <li>Refactorizar <code class="i">AuthController.login</code> / <code class="i">AuthService.login</code>: validar credenciales, generar token con JwtService (P2), devolver <code class="i">LoginResponse { token, usuario }</code>.</li>
+          <li>Crear <code class="i">dto/response/LoginResponse.java</code>.</li>
+        </ul>
+        <p class="label">Archivos</p><p class="files">security/CustomUserDetailsService.java · dto/response/LoginResponse.java · controllers/AuthController.java · service/AuthService.java</p>
+        <p class="label">Depende / Bloquea</p>
+        <div class="deps"><span class="dep wait">dep: P2</span><span class="dep block">bloquea: P3, P6</span></div>
+        <div class="done"><b>Done:</b> login válido → 200 con JWT; inválido → 401; UserDetailsService carga roles bien.</div>
+      </div>
+    </div>
+
+    <!-- P5 -->
+    <div class="track">
+      <div class="track-head"><div class="badge" style="background:color-mix(in srgb,var(--p5) 18%,transparent);color:var(--p5)">🔐</div><div><p class="title">P5 · Autorización por roles en endpoints</p><p class="role">Anota y hace cumplir la matriz.</p></div></div>
+      <div class="track-body">
+        <h3>Tareas</h3>
+        <ul class="t">
+          <li>Habilitar <code class="i">@EnableMethodSecurity</code> en SecurityConfig (con P1).</li>
+          <li>Anotar controllers con <code class="i">@PreAuthorize</code>: <code class="i">ProductoController</code> <code class="i">isAuthenticated()</code> a nivel de clase; <code class="i">UsuarioController</code>, <code class="i">CarritoController</code> igual.</li>
+          <li>Owner o admin en productos: <code class="i">@PreAuthorize("@productoSecurity.esOwner(#id) or hasRole('ADMIN')")</code> — crear <code class="i">security/ProductoSecurityBean</code> que valide <code class="i">producto.vendedor.id == usuarioAutenticado.id</code>.</li>
+          <li>Carrito "mismo usuario": <code class="i">@PreAuthorize("#usuarioId == authentication.principal.id or hasRole('ADMIN')")</code>.</li>
+          <li>Crear <code class="i">security/CustomAccessDeniedHandler.java</code> → 403 JSON.</li>
+          <li>Agregar usuario admin al seed (<code class="i">data.sql</code>) con <code class="i">ROLE_ADMIN</code>.</li>
+        </ul>
+        <p class="label">Archivos</p><p class="files">controllers/*.java · security/ProductoSecurityBean.java · security/CustomAccessDeniedHandler.java · data.sql</p>
+        <p class="label">Depende / Bloquea</p>
+        <div class="deps"><span class="dep wait">dep: P1, P3</span><span class="dep block">bloquea: P6</span></div>
+        <div class="done"><b>Done:</b> cada endpoint cumple la matriz; 403 JSON sin permiso; owner-check funciona.</div>
+      </div>
+    </div>
+
+    <!-- P6 -->
+    <div class="track">
+      <div class="track-head"><div class="badge" style="background:color-mix(in srgb,var(--p6) 18%,transparent);color:var(--p6)">🧪</div><div><p class="title">P6 · Testing, Postman, docs</p><p class="role">Cierra el loop de calidad.</p></div></div>
+      <div class="track-body">
+        <h3>Tareas</h3>
+        <ul class="t">
+          <li><b>Tests:</b> <code class="i">JwtServiceTest</code>; <code class="i">WebSecurityTest</code> con MockMvc + <code class="i">@WithMockUser</code> (público accesible, protegido sin token → 401, con token → 200, rol insuficiente → 403); test integración login → token → request autenticado.</li>
+          <li><b>Postman:</b> actualizar la colección con flujo login → guardar <code class="i">{{token}}</code> → requests con <code class="i">Authorization: Bearer {{token}}</code>.</li>
+          <li><b>README:</b> documentar auth, roles, env vars <code class="i">JWT_SECRET</code> / <code class="i">JWT_EXPIRATION_MS</code>.</li>
+          <li>Probar end-to-end con el seed (<code class="i">jperez/cambiar123</code> + nuevo admin).</li>
+        </ul>
+        <p class="label">Archivos</p><p class="files">src/test/... · *.postman_collection.json · README.md</p>
+        <p class="label">Depende / Bloquea</p>
+        <div class="deps"><span class="dep wait">dep: todos</span></div>
+        <div class="done"><b>Done:</b> tests verdes, Postman funciona el flujo completo, README actualizado.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">Fases temporales</p>
+    <h2>Paralelización en 4 días</h2>
+    <div class="phases">
+      <div class="phase"><p class="ph">Fase 1 · día 1</p><p class="items"><b>P1</b> SecurityConfig<br><b>P2</b> JwtService<br><span style="color:var(--faint)">en paralelo, sin deps entre sí</span></p></div>
+      <div class="phase"><p class="ph">Fase 2 · día 2-3</p><p class="items"><b>P3</b> Filtro JWT<br><b>P4</b> UserDetailsService + refactor Login<br><span style="color:var(--faint)">arrancan al definir P2 la interfaz</span></p></div>
+      <div class="phase"><p class="ph">Fase 3 · día 4</p><p class="items"><b>P5</b> @PreAuthorize + owner checks<br><span style="color:var(--faint)">necesita P1 + P3</span></p></div>
+      <div class="phase"><p class="ph">Fase 4 · día 5</p><p class="items"><b>P6</b> Testing + Postman + README<br><span style="color:var(--faint)">integra todo</span></p></div>
+    </div>
+    <p class="note">P3 y P4 pueden stubbar <code class="i">JwtService</code> el día 1 y la interfaz de <code class="i">CustomUserDetailsService</code> para no bloquearse. Acordar las firmas en el kick-off.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">Coordinación</p>
+    <h2>Interfaces y PRs</h2>
+    <h3>Contratos entre tracks (acordar el día 1)</h3>
+    <ul class="t">
+      <li><code class="i">JwtService.generateToken(Usuario)→String</code>, <code class="i">extractUsername</code>, <code class="i">isTokenValid</code> — P2 expone, P3 y P4 consumen.</li>
+      <li><code class="i">CustomUserDetailsService.loadUserByUsername(String)→UserDetails</code> — P4 expone, P3 consume.</li>
+      <li><code class="i">LoginResponse { String token; UsuarioResponse usuario; }</code> — P4 expone, P6 consume.</li>
+      <li>Whitelist de paths públicos — P1 + P5 acuerdan.</li>
+    </ul>
+    <h3>Ramas</h3>
+    <p>Rama <code class="i">feature/security-auth</code> con sub-branches por track (<code class="i">feature/security-infra</code>, <code class="i">feature/jwt-service</code>…) → PRs chicos a <code class="i">feature/security-auth</code> → un PR final a <code class="i">main</code>.</p>
+    <p class="note"><b>Conflictos esperados:</b> <code class="i">pom.xml</code> (P1), <code class="i">AuthService.java</code> (P1 + P4), <code class="i">SecurityConfig</code> (P1 + P3 + P5). Coordinar quién toca cada uno en cada fase.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">Riesgos</p>
+    <h2>Cosas a cuidar</h2>
+    <ol class="risk">
+      <li><div><b>Bug del doble <code class="i">/api</code></b> en CatalogoController — fixearlo antes de P1, sino el whitelist no matchea y el catálogo queda protegido.</div></li>
+      <li><div><b><code class="i">spring-security-crypto</code> ya está</b> en el pom; al agregar starter-security no hace falta sacarlo, pero el <code class="i">BCryptPasswordEncoder</code> de AuthService debe pasar a bean inyectado (P1).</div></li>
+      <li><div><b>H2 console + Swagger</b> deben quedar en el whitelist o dejan de funcionar.</div></li>
+      <li><div><b><code class="i">Usuario.roles</code> es EAGER</b> — UserDetailsService no tendrá lazy loading, pero tenerlo en cuenta.</div></li>
+      <li><div><b>Owner checks (P5)</b> requieren que el principal exponga <code class="i">usuarioId</code> — definir cómo P3 popula el principal.</div></li>
+      <li><div><b>No romper tests existentes</b> (<code class="i">AuthServiceTest</code>, etc.) — P6 los actualiza para el nuevo flujo con token.</div></li>
+    </ol>
+  </section>
+</div>
