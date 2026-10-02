@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "nombre": "Notebook Lenovo ThinkPad X1 Carbon",
+    "descripcion": "Notebook ultradelgada 14\" Intel Core i7, 16GB RAM, 512GB SSD. Ideal para trabajo profesional.",
+    "precio": 1850000,
+    "stock": 12,
+    "envioGratis": true,
+    "compraInternacional": false,
+    "imagen": "https://via.placeholder.com/300x200?text=Notebook"
+  },
+  {
+    "id": 2,
+    "nombre": "Apple iPhone 15 Pro 256GB",
+    "descripcion": "Smartphone 6.1\" chip A17 Pro, cámara triple 48MP, titanio natural. Liberado para cualquier compañía.",
+    "precio": 1450000,
+    "stock": 25,
+    "envioGratis": true,
+    "compraInternacional": true,
+    "imagen": "https://via.placeholder.com/300x200?text=iPhone"
+  },
+  {
+    "id": 3,
+    "nombre": "Auriculares Sony WH-1000XM5",
+    "descripcion": "Auriculares Bluetooth con cancelación de ruido líder en su clase, 30hs de batería.",
+    "precio": 389000,
+    "stock": 40,
+    "envioGratis": false,
+    "compraInternacional": true,
+    "imagen": "https://via.placeholder.com/300x200?text=Auriculares"
+  },
+  {
+    "id": 4,
+    "nombre": "Cafetera Espresso Philips 2200",
+    "descripcion": "Máquina de café automática con molinillo integrado, pantalla touch y vaporizador de leche.",
+    "precio": 620000,
+    "stock": 8,
+    "envioGratis": true,
+    "compraInternacional": false,
+    "imagen": "https://via.placeholder.com/300x200?text=Cafetera"
+  },
+  {
+    "id": 5,
+    "nombre": "Smart TV Samsung 55\" 4K QLED",
+    "descripcion": "Televisor 55 pulgadas QLED 4K UHD, HDR10+, sistema Tizen, control por voz.",
+    "precio": 980000,
+    "stock": 0,
+    "envioGratis": false,
+    "compraInternacional": false,
+    "imagen": "https://via.placeholder.com/300x200?text=SmartTV"
+  },
+  {
+    "id": 6,
+    "nombre": "Teclado Mecánico Keychron K2",
+    "descripcion": "Teclado inalámbrico mecánico 75% con switches brown retroiluminados, compatible Mac/Windows.",
+    "precio": 145000,
+    "stock": 60,
+    "envioGratis": true,
+    "compraInternacional": true,
+    "imagen": "https://via.placeholder.com/300x200?text=Teclado"
+  }
+]

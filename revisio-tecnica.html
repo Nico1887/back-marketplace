@@ -1,0 +1,362 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --ground:#eceef2; --surface:#f7f8fa; --surface-2:#ffffff;
+    --ink:#1a1d24; --muted:#5d626c; --faint:#8a8f99;
+    --rule:#d4d8df; --rule-soft:#e3e6ec;
+    --accent:#b45309; --accent-soft:#fdecd6; --accent-ink:#7a3906;
+    --good:#15803d; --warn:#b45309; --bad:#b91c1c;
+    --good-soft:#dcf2e3; --warn-soft:#fdecd6; --bad-soft:#fbe0e0;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#13151a; --surface:#1b1e25; --surface-2:#22262f;
+      --ink:#e6e8ee; --muted:#9aa0ac; --faint:#6b7280;
+      --rule:#2c313a; --rule-soft:#232831;
+      --accent:#f59e0b; --accent-soft:#3a2a10; --accent-ink:#fbbf24;
+      --good:#4ade80; --warn:#f59e0b; --bad:#f87171;
+      --good-soft:#14321f; --warn-soft:#3a2a10; --bad-soft:#3a1818;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#13151a; --surface:#1b1e25; --surface-2:#22262f;
+    --ink:#e6e8ee; --muted:#9aa0ac; --faint:#6b7280;
+    --rule:#2c313a; --rule-soft:#232831;
+    --accent:#f59e0b; --accent-soft:#3a2a10; --accent-ink:#fbbf24;
+    --good:#4ade80; --warn:#f59e0b; --bad:#f87171;
+    --good-soft:#14321f; --warn-soft:#3a2a10; --bad-soft:#3a1818;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:"IBM Plex Sans",system-ui,sans-serif;
+    font-size:16px; line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:"IBM Plex Mono",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+  .display{font-family:"Fraunces",Georgia,serif}
+
+  /* layout */
+  .shell{display:grid; grid-template-columns:220px minmax(0,1fr); gap:48px; max-width:1080px; margin:0 auto; padding:48px 24px 96px}
+  @media (max-width:880px){ .shell{grid-template-columns:1fr; gap:0; padding:32px 18px 64px} }
+
+  /* rail */
+  .rail{position:sticky; top:24px; align-self:start; height:max-content}
+  @media (max-width:880px){ .rail{position:static; margin-bottom:32px} }
+  .rail h4{font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:.12em; color:var(--faint); margin:0 0 14px}
+  .rail ol{list-style:none; margin:0; padding:0; counter-reset:sec}
+  .rail li{counter-increment:sec; margin:0; padding:6px 0}
+  .rail a{display:flex; gap:10px; align-items:baseline; color:var(--muted); text-decoration:none; font-size:13.5px; line-height:1.35; transition:color .15s}
+  .rail a::before{content:counter(sec,decimal-leading-zero); font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--faint); width:20px; flex:none}
+  .rail a:hover{color:var(--accent)}
+
+  /* main */
+  main{min-width:0}
+  section{margin-bottom:56px; scroll-margin-top:24px}
+  .eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:.14em; color:var(--accent); margin:0 0 10px}
+  h2{font-family:"Fraunces",serif; font-weight:500; font-size:30px; line-height:1.15; margin:0 0 20px; letter-spacing:-.01em; text-wrap:balance}
+  h3{font-family:"IBM Plex Sans",sans-serif; font-weight:600; font-size:18px; margin:28px 0 12px; letter-spacing:-.005em}
+  p{margin:0 0 14px}
+  a.link{color:var(--accent); text-decoration:underline; text-underline-offset:2px}
+  strong{font-weight:600}
+  ul.tight{margin:8px 0; padding-left:20px}
+  ul.tight li{margin:4px 0}
+
+  /* hero */
+  .hero{margin-bottom:64px; padding-bottom:32px; border-bottom:1px solid var(--rule)}
+  .hero .kicker{font-family:"IBM Plex Mono",monospace; font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin:0 0 18px}
+  .hero h1{font-family:"Fraunces",serif; font-weight:500; font-size:clamp(38px,6vw,56px); line-height:1.02; letter-spacing:-.02em; margin:0 0 16px; text-wrap:balance}
+  .hero .lede{font-size:18px; line-height:1.5; color:var(--muted); max-width:62ch; margin:0 0 24px}
+  .meta{display:flex; flex-wrap:wrap; gap:8px 20px; font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--faint)}
+  .meta span b{color:var(--ink); font-weight:500}
+
+  /* chips */
+  .chips{display:flex; flex-wrap:wrap; gap:8px; margin:18px 0}
+  .chip{font-family:"IBM Plex Mono",monospace; font-size:12px; padding:4px 10px; background:var(--surface-2); border:1px solid var(--rule); border-radius:4px; color:var(--muted)}
+
+  /* table */
+  .tbl{width:100%; border-collapse:collapse; font-size:14px; margin:8px 0 4px}
+  .tbl th, .tbl td{text-align:left; padding:9px 12px; border-bottom:1px solid var(--rule-soft); vertical-align:top}
+  .tbl th{font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:.08em; color:var(--faint); border-bottom:1px solid var(--rule)}
+  .tbl td code{font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--accent-ink)}
+  .tbl tr:last-child td{border-bottom:none}
+  .wrap{overflow-x:auto}
+
+  /* module cards */
+  .modules{display:grid; grid-template-columns:1fr; gap:16px}
+  .mod{background:var(--surface); border:1px solid var(--rule); border-radius:8px; padding:20px 22px}
+  .mod-head{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px}
+  .mod-head h3{margin:0; font-size:17px}
+  .pill{font-family:"IBM Plex Mono",monospace; font-size:10.5px; font-weight:500; text-transform:uppercase; letter-spacing:.08em; padding:3px 9px; border-radius:999px; flex:none}
+  .pill.ok{background:var(--good-soft); color:var(--good)}
+  .pill.warn{background:var(--warn-soft); color:var(--warn)}
+  .pill.bad{background:var(--bad-soft); color:var(--bad)}
+  .mod p{margin:6px 0; font-size:14.5px; color:var(--muted)}
+  .ep{font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--ink); display:block; padding:3px 0}
+  .ep b{color:var(--accent-ink); font-weight:500; display:inline-block; width:54px}
+
+  /* timeline */
+  .tl{position:relative; padding-left:22px; border-left:1px solid var(--rule); margin:8px 0}
+  .tl .ev{position:relative; padding:0 0 22px}
+  .tl .ev:last-child{padding-bottom:0}
+  .tl .ev::before{content:""; position:absolute; left:-27px; top:4px; width:9px; height:9px; border-radius:50%; background:var(--ground); border:2px solid var(--accent)}
+  .tl .ev.merge::before{background:var(--accent); border-color:var(--accent)}
+  .tl .hash{font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--faint)}
+  .tl .msg{font-size:14px; margin:2px 0 0}
+  .tl .msg b{font-weight:500}
+  .tl .who{font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--accent-ink)}
+
+  /* contributors */
+  .contrib{display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:10px; margin:14px 0}
+  .contrib div{background:var(--surface); border:1px solid var(--rule); border-radius:6px; padding:10px 12px}
+  .contrib b{display:block; font-size:13.5px; font-weight:500}
+  .contrib span{font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--faint)}
+
+  /* weak points */
+  .weak{list-style:none; padding:0; margin:8px 0; counter-reset:w}
+  .weak li{counter-increment:w; display:grid; grid-template-columns:28px 1fr; gap:12px; padding:14px 0; border-bottom:1px solid var(--rule-soft)}
+  .weak li:last-child{border-bottom:none}
+  .weak li::before{content:counter(w); font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--bad); font-weight:500}
+  .weak li b{font-weight:600}
+  .weak li div{font-size:14.5px; color:var(--muted)}
+
+  /* arch diagram */
+  .arch{display:flex; flex-direction:column; gap:6px; margin:14px 0}
+  .arch .layer{display:flex; align-items:center; gap:14px; background:var(--surface); border:1px solid var(--rule); border-left:3px solid var(--accent); border-radius:4px; padding:10px 14px}
+  .arch .layer .name{font-family:"IBM Plex Mono",monospace; font-size:13px; font-weight:500; min-width:110px}
+  .arch .layer .desc{font-size:13.5px; color:var(--muted)}
+
+  code.inline{font-family:"IBM Plex Mono",monospace; font-size:.88em; background:var(--surface-2); border:1px solid var(--rule-soft); border-radius:3px; padding:1px 5px; color:var(--accent-ink)}
+  .note{font-size:13.5px; color:var(--muted); border-left:2px solid var(--accent); padding:4px 0 4px 14px; margin:14px 0}
+</style>
+
+<div class="shell">
+  <aside class="rail">
+    <h4>Índice</h4>
+    <ol>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#stack">Stack</a></li>
+      <li><a href="#arch">Arquitectura</a></li>
+      <li><a href="#model">Modelo de dominio</a></li>
+      <li><a href="#modules">Módulos</a></li>
+      <li><a href="#transversal">Transversales</a></li>
+      <li><a href="#git">Git &amp; equipo</a></li>
+      <li><a href="#weak">Puntos débiles</a></li>
+    </ol>
+  </aside>
+
+  <main>
+    <header class="hero">
+      <p class="kicker">Revisión técnica · Repositorio</p>
+      <h1 class="display">back-marketplace</h1>
+      <p class="lede">Backend REST de un e-commerce desarrollado para el TPO de Aplicaciones Interactivas (UADE). Registro y autenticación de usuarios, publicación de productos con imágenes y categorías, catálogo filtrado y paginado, carrito de compras y orden con precio congelado.</p>
+      <div class="meta">
+        <span><b>repo</b> github.com/Nico1887/back-marketplace</span>
+        <span><b>HEAD</b> 2bfa9f3 · PR #10</span>
+        <span><b>revisión</b> 2026-09-17</span>
+      </div>
+    </header>
+
+    <section id="overview">
+      <p class="eyebrow">01 · Overview</p>
+      <h2>Qué es y qué hace</h2>
+      <p>API REST construida con Spring Boot que modela un marketplace: usuarios que publican productos, compradores que navegan un catálogo y gestionan un carrito, y un checkout que valida stock, lo descuenta y genera una orden de compra con el detalle y el <strong>precio unitario congelado</strong> al momento de la operación. <strong>No incluye pasarela de pagos.</strong></p>
+      <p>El proyecto arranca con perfil <code class="inline">dev</code> (H2 en memoria, se recrea en cada arranque y se carga con datos de prueba desde <code class="inline">data.sql</code>). Todas las rutas cuelgan de <code class="inline">/api</code> por <code class="inline">server.servlet.context-path</code>.</p>
+    </section>
+
+    <section id="stack">
+      <p class="eyebrow">02 · Stack</p>
+      <h2>Tecnologías</h2>
+      <div class="chips">
+        <span class="chip">Java 17</span>
+        <span class="chip">Spring Boot 4.1.1</span>
+        <span class="chip">Spring Data JPA / Hibernate</span>
+        <span class="chip">H2 (dev) · MySQL (prod)</span>
+        <span class="chip">Maven + wrapper</span>
+        <span class="chip">Lombok</span>
+        <span class="chip">Jakarta Bean Validation</span>
+        <span class="chip">springdoc-openapi (Swagger)</span>
+        <span class="chip">spring-security-crypto (BCrypt)</span>
+      </div>
+      <p class="note">Usa <code class="inline">spring-security-crypto</code> solo para el encoder BCrypt — <strong>no</strong> Spring Security completo. No hay filtros de autorización protegiendo endpoints.</p>
+    </section>
+
+    <section id="arch">
+      <p class="eyebrow">03 · Arquitectura</p>
+      <h2>Capas en 5 niveles</h2>
+      <p>Arquitectura clásica en capas. Los controllers <strong>nunca exponen entidades JPA</strong>: siempre trabajan contra DTOs de request/response.</p>
+      <div class="arch">
+        <div class="layer"><span class="name">config/</span><span class="desc">Configuración transversal — CORS, OpenAPI/Swagger</span></div>
+        <div class="layer"><span class="name">controllers/</span><span class="desc">Exposición HTTP (<code class="inline">@RestController</code>)</span></div>
+        <div class="layer"><span class="name">service/</span><span class="desc">Lógica de negocio (<code class="inline">@Service</code>, <code class="inline">@Transactional</code>)</span></div>
+        <div class="layer"><span class="name">repository/</span><span class="desc">Acceso a datos (JpaRepository)</span></div>
+        <div class="layer"><span class="name">entity/</span><span class="desc">Modelo de dominio JPA (<code class="inline">@Entity</code>)</span></div>
+        <div class="layer"><span class="name">dto/</span><span class="desc">Request y response objects (separados en subpaquetes)</span></div>
+        <div class="layer"><span class="name">exceptions/</span><span class="desc">Excepciones propias + <code class="inline">@RestControllerAdvice</code> global</span></div>
+      </div>
+    </section>
+
+    <section id="model">
+      <p class="eyebrow">04 · Modelo de dominio</p>
+      <h2>11 entidades JPA</h2>
+      <div class="wrap">
+      <table class="tbl">
+        <thead><tr><th>Entidad</th><th>Rol</th><th>Notas</th></tr></thead>
+        <tbody>
+          <tr><td><code>Usuario</code></td><td>comprador / vendedor</td><td>username y email únicos; password BCrypt; <code>@ManyToMany</code> EAGER con Rol</td></tr>
+          <tr><td><code>Rol</code></td><td>autorización</td><td><code>ROLE_USER</code>, <code>ROLE_ADMIN</code> (seed en data.sql)</td></tr>
+          <tr><td><code>Producto</code></td><td>publicación</td><td>vendedor (M1), imágenes (1M), categorías (MM); <code>stock</code>, <code>activo</code> (baja lógica), <code>fechaAlta</code>; métodos <code>hayStock()</code>/<code>descontarStock()</code></td></tr>
+          <tr><td><code>Categoria</code></td><td>clasificación</td><td>nombre único; relación inversa con Producto</td></tr>
+          <tr><td><code>ImagenProducto</code></td><td>fotos</td><td>URL (max 500), <code>@ManyToOne</code> a Producto</td></tr>
+          <tr><td><code>Carrito</code></td><td>carrito activo</td><td><code>@OneToOne</code> Usuario; <code>calcularTotal()</code>, <code>vaciar()</code></td></tr>
+          <tr><td><code>DetalleCarrito</code></td><td>ítem carrito</td><td><strong>clave compuesta</strong> (carrito_id, producto_id); <code>calcularSubtotal()</code></td></tr>
+          <tr><td><code>DetalleCarritoId</code></td><td>PK embebible</td><td><code>@Embeddable</code> Serializable</td></tr>
+          <tr><td><code>OrdenCompra</code></td><td>orden generada</td><td><code>@CreationTimestamp</code>, total BigDecimal, <code>recalcularTotal()</code></td></tr>
+          <tr><td><code>DetalleOrden</code></td><td>ítem orden</td><td><strong>clave compuesta</strong>; <code>precioUnitario</code> se congela al crear</td></tr>
+          <tr><td><code>DetalleOrdenId</code></td><td>PK embebible</td><td><code>@Embeddable</code></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="note">Decisiones buenas: importes con <code class="inline">BigDecimal</code> (no double), baja lógica vía <code class="inline">activo</code>, precio congelado en la orden, <code class="inline">equals/hashCode</code> basados en ID (patrón Hibernate correcto).</p>
+    </section>
+
+    <section id="modules">
+      <p class="eyebrow">05 · Módulos funcionales</p>
+      <h2>Seis dominios</h2>
+      <div class="modules">
+
+        <div class="mod">
+          <div class="mod-head"><h3>1 · Auth</h3><span class="pill ok">completo</span></div>
+          <p><code class="inline">AuthController</code> + <code class="inline">AuthService</code>. Registro valida email/username únicos (sino 409), hashea password con BCrypt, asigna <code class="inline">ROLE_USER</code>. Login verifica hash con <code class="inline">matches()</code>, credenciales inválidas → 401.</p>
+          <span class="ep"><b>POST</b>/auth/register</span>
+          <span class="ep"><b>POST</b>/auth/login</span>
+          <p class="note" style="margin:8px 0 0">No emite JWT/token: el login solo valida y devuelve el usuario.</p>
+        </div>
+
+        <div class="mod">
+          <div class="mod-head"><h3>2 · Usuarios</h3><span class="pill warn">mínimo</span></div>
+          <p><code class="inline">UsuarioController</code> + <code class="inline">UsuarioService</code>. Casi un placeholder.</p>
+          <span class="ep"><b>GET</b>/usuarios/{id}</span>
+        </div>
+
+        <div class="mod">
+          <div class="mod-head"><h3>3 · Productos (vendedor)</h3><span class="pill ok">completo</span></div>
+          <p><code class="inline">ProductoController</code> + <code class="inline">ProductoService</code>. Alta, modificación, baja lógica, gestión de stock, alta/baja de imágenes.</p>
+          <span class="ep"><b>POST</b>/productos</span>
+          <span class="ep"><b>PUT</b>/productos/{id}</span>
+          <span class="ep"><b>DELETE</b>/productos/{id} <span style="color:var(--faint)">(baja lógica)</span></span>
+          <span class="ep"><b>PATCH</b>/productos/{id}/stock?cantidad=</span>
+          <span class="ep"><b>POST</b>/productos/{id}/imagenes</span>
+          <span class="ep"><b>DELETE</b>/productos/{id}/imagenes/{imagenId}</span>
+        </div>
+
+        <div class="mod">
+          <div class="mod-head"><h3>4 · Catálogo (comprador)</h3><span class="pill warn">bug path</span></div>
+          <p><code class="inline">CatalogoController</code> + servicios. Listado paginado, filtrado por nombre (LIKE) y categoría, ordenado alfabéticamente. Query JPQL con <code class="inline">EXISTS</code> sobre categorías.</p>
+          <span class="ep"><b>GET</b>/api/productos?nombre=&categoriaId=&page=&size=</span>
+          <span class="ep"><b>GET</b>/api/productos/{id}</span>
+          <span class="ep"><b>GET</b>/api/categorias</span>
+          <p class="note" style="margin:8px 0 0"><code class="inline">@RequestMapping("/api")</code> duplica el context-path → rutas reales <code class="inline">/api/api/productos</code>. Mismo bug ya fixeado en ProductoController.</p>
+        </div>
+
+        <div class="mod">
+          <div class="mod-head"><h3>5 · Carrito</h3><span class="pill ok">completo</span></div>
+          <p><code class="inline">CarritoController</code> + <code class="inline">CarritoService</code>. Agregar ítem <strong>validando stock</strong> (suma a cantidad existente, verifica <code class="inline">hayStock()</code>, si no → 409). Reutiliza detalle existente en vez de duplicar; <code class="inline">orphanRemoval</code> correcto.</p>
+          <span class="ep"><b>GET</b>/carrito/usuarios/{usuarioId}</span>
+          <span class="ep"><b>POST</b>/carrito/usuarios/{usuarioId}/items</span>
+          <span class="ep"><b>PUT</b>/carrito/usuarios/{usuarioId}/items/{productoId}</span>
+          <span class="ep"><b>DELETE</b>/carrito/usuarios/{usuarioId}/items/{productoId}</span>
+          <span class="ep"><b>DELETE</b>/carrito/usuarios/{usuarioId}/items</span>
+        </div>
+
+        <div class="mod">
+          <div class="mod-head"><h3>6 · Órdenes / Checkout</h3><span class="pill bad">sin implementar</span></div>
+          <p>Existen <code class="inline">OrdenCompra</code>, <code class="inline">DetalleOrden</code>, <code class="inline">OrdenCompraRepository</code>, <code class="inline">DetalleOrdenRepository</code> — pero <strong>no hay controller ni service</strong>. El checkout descripto en el README no está implementado todavía.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="transversal">
+      <p class="eyebrow">06 · Transversales</p>
+      <h2>Configuración, errores y datos</h2>
+      <h3>Manejo global de errores</h3>
+      <p><code class="inline">GlobalExceptionHandler</code> (<code class="inline">@RestControllerAdvice</code>) mapea excepciones propias a HTTP y devuelve un <code class="inline">ErrorResponse</code> con timestamp, status, message y path:</p>
+      <div class="wrap">
+      <table class="tbl">
+        <thead><tr><th>Excepción</th><th>HTTP</th><th>Cuándo</th></tr></thead>
+        <tbody>
+          <tr><td><code>ResourceNotFoundException</code></td><td>404</td><td>recurso no encontrado</td></tr>
+          <tr><td><code>StateConflictException</code></td><td>409</td><td>email/username duplicado, stock insuficiente</td></tr>
+          <tr><td><code>InvalidCredentialsException</code></td><td>401</td><td>login inválido</td></tr>
+          <tr><td><code>BusinessRulesException</code></td><td>400</td><td>regla de negocio</td></tr>
+          <tr><td><code>MethodArgumentNotValidException</code></td><td>400</td><td>validación de campos (con mapa de errores)</td></tr>
+          <tr><td><code>Exception</code> (fallback)</td><td>500</td><td>cualquier otra cosa</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h3>Seed de datos (data.sql)</h3>
+      <p>2 roles, 5 categorías (Electrónica, Indumentaria, Hogar, Libros, Deportes), 2 usuarios (password <code class="inline">cambiar123</code> en BCrypt), 3 productos, relaciones producto-categoría y 4 imágenes placeholder.</p>
+      <h3>Perfiles</h3>
+      <ul class="tight">
+        <li><code class="inline">application-dev.properties</code> — H2 en memoria, h2-console en <code class="inline">/h2-console</code></li>
+        <li><code class="inline">application-prod.properties</code> — MySQL vía env vars <code class="inline">DB_HOST/NAME/USER/PASSWORD</code></li>
+      </ul>
+    </section>
+
+    <section id="git">
+      <p class="eyebrow">07 · Git &amp; equipo</p>
+      <h2>Historial y contribuyentes</h2>
+      <p>Workflow por ramas <code class="inline">feature/&lt;dominio&gt;</code> mergeadas a <code class="inline">main</code> por Pull Request. <strong>10 PRs merged</strong> (#2 a #10). ~34 commits de 9 personas.</p>
+
+      <h3>Contribuyentes</h3>
+      <div class="contrib">
+        <div><b>Ramiro Foyth</b><span>9 commits</span></div>
+        <div><b>Nicolás Amarilla</b><span>6 commits</span></div>
+        <div><b>Enzo Acevedo</b><span>5 commits</span></div>
+        <div><b>Nico</b><span>5 commits</span></div>
+        <div><b>Agustín Chiarenza</b><span>3 commits</span></div>
+        <div><b>Tobías Accorinti</b><span>2 commits</span></div>
+        <div><b>Santiago Britez</b><span>1 commit</span></div>
+        <div><b>enzoacev</b><span>1 commit</span></div>
+      </div>
+
+      <h3>Línea de tiempo</h3>
+      <div class="tl">
+        <div class="ev"><span class="hash">f78556c</span><p class="msg"><b>Config inicial + entidades JPA</b> — base de todo el proyecto</p></div>
+        <div class="ev"><span class="hash">bed9a02 · 9383d93</span><p class="msg">Repositorios y DTOs de orden</p></div>
+        <div class="ev merge"><span class="hash">189e726 · PR #2</span><p class="msg"><b>Merge agustin-chiarenza</b></p><span class="who">Agustín Chiarenza</span></div>
+        <div class="ev"><span class="hash">60b3300 → 62ba480</span><p class="msg">ProductoRepository, DTOs y controller de producto — alta, modificación, baja lógica, gestión de stock</p><span class="who">Ramiro Foyth</span></div>
+        <div class="ev"><span class="hash">902fd3d</span><p class="msg"><b>Manejo global de errores + configs base + docs</b></p><span class="who">Nicolás Amarilla</span></div>
+        <div class="ev merge"><span class="hash">16d8f80 · PR #3</span><p class="msg"><b>Merge Ramiro-productos</b></p></div>
+        <div class="ev"><span class="hash">f57d0b0</span><p class="msg">Endpoints de imágenes</p></div>
+        <div class="ev merge"><span class="hash">f8c3cb9 · 4377659 · PR #4 #5</span><p class="msg"><b>Merge transversal + productos</b></p></div>
+        <div class="ev"><span class="hash">03571f3 → 9d632f0</span><p class="msg">Repos, DTOs y lógica de carrito — agregar ítem validando stock, obtener/crear carrito</p><span class="who">Tobías Accorinti</span></div>
+        <div class="ev merge"><span class="hash">05ee540 · PR #7</span><p class="msg"><b>Merge carrito</b></p></div>
+        <div class="ev"><span class="hash">40ded32</span><p class="msg"><b>fix: doble /api en ProductoController</b> por context-path</p></div>
+        <div class="ev merge"><span class="hash">e945089 · PR #8</span><p class="msg"><b>Merge fix path</b></p></div>
+        <div class="ev"><span class="hash">f7e132d</span><p class="msg"><b>Módulo de usuarios + login con BCrypt</b>, DTOs y manejo 401/409</p><span class="who">Santiago Britez</span></div>
+        <div class="ev merge"><span class="hash">a875b38 · PR #9</span><p class="msg"><b>Merge usuarios</b></p></div>
+        <div class="ev"><span class="hash">af1bbed → 7389b39</span><p class="msg">DTOs de catálogo, listado de categorías, productos con filtros+orden, detalle+paginación, CatalogoController</p><span class="who">Enzo Acevedo</span></div>
+        <div class="ev merge"><span class="hash">2bfa9f3 · PR #10</span><p class="msg"><b>Merge catálogo</b> — HEAD actual</p></div>
+      </div>
+    </section>
+
+    <section id="weak">
+      <p class="eyebrow">08 · Puntos débiles</p>
+      <h2>Deuda técnica detectada</h2>
+      <ol class="weak">
+        <li><div><b>Checkout sin implementar.</b> Existen entidades y repos de orden pero no hay controller ni service. El README promete un checkout que no existe.</div></li>
+        <li><div><b>Doble <code class="inline">/api</code> en CatalogoController.</b> <code class="inline">@RequestMapping("/api")</code> + context-path → rutas <code class="inline">/api/api/productos</code>. Mismo bug ya fixeado en ProductoController.</div></li>
+        <li><div><b>ProductoService usa <code class="inline">RuntimeException</code>.</b> Los "no encontrado" caen en el handler genérico → <strong>500 en lugar de 404</strong>. Inconsistencia con el resto del proyecto.</div></li>
+        <li><div><b>Sin autenticación real.</b> El login valida credenciales pero no genera token ni hay filtros de seguridad. Los endpoints de vendedor (alta/baja/stock de producto) quedan abiertos.</div></li>
+        <li><div><b>Usuario inferido por path.</b> <code class="inline">/carrito/usuarios/{usuarioId}</code> en vez de inferirlo del usuario autenticado.</div></li>
+        <li><div><b>Archivos duplicados con typo.</b> <code class="inline">CorsConfig.Java</code> y <code class="inline">OpenApiConfing.Java</code> (extensión <code class="inline">.Java</code> mal) junto a los <code class="inline">.java</code> correctos en <code class="inline">config/</code>.</div></li>
+        <li><div><b>Cobertura de tests muy baja.</b> Solo 3 tests de servicio + context loads; sin tests de controller ni integración.</div></li>
+      </ol>
+    </section>
+
+  </main>
+</div>
