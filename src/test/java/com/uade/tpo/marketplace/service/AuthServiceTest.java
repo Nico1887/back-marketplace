@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.uade.tpo.marketplace.dto.request.LoginRequest;
 import com.uade.tpo.marketplace.dto.request.RegistroRequest;
@@ -31,6 +32,9 @@ class AuthServiceTest {
 
     @Mock
     private RolRepository rolRepository;
+
+    @Mock
+    private PasswordEncoder passwordEncoder;
 
     @InjectMocks
     private AuthService authService;
@@ -76,6 +80,7 @@ class AuthServiceTest {
         when(usuarioRepository.existsByEmail(request.getEmail())).thenReturn(false);
         when(usuarioRepository.existsByUsername(request.getUsername())).thenReturn(false);
         when(rolRepository.findByNombre("ROLE_USER")).thenReturn(java.util.Optional.of(new Rol("ROLE_USER")));
+        when(passwordEncoder.encode(request.getPassword())).thenReturn("hash");
         when(usuarioRepository.save(any(Usuario.class))).thenAnswer(invocation -> {
             Usuario usuario = invocation.getArgument(0);
             usuario.setId(1L);
