@@ -230,8 +230,8 @@
         <div class="mod">
           <div class="mod-head"><h3>1 · Auth</h3><span class="pill ok">completo</span></div>
           <p><code class="inline">AuthController</code> + <code class="inline">AuthService</code>. Registro valida email/username únicos (sino 409), hashea password con BCrypt, asigna <code class="inline">ROLE_USER</code>. Login verifica hash con <code class="inline">matches()</code>, credenciales inválidas → 401.</p>
-          <span class="ep"><b>POST</b>/auth/register</span>
-          <span class="ep"><b>POST</b>/auth/login</span>
+          <span class="ep"><b>POST</b>/api/auth/register</span>
+          <span class="ep"><b>POST</b>/api/auth/login</span>
           <p class="note" style="margin:8px 0 0">No emite JWT/token: el login solo valida y devuelve el usuario.</p>
         </div>
 

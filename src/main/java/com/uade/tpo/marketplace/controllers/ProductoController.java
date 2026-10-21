@@ -13,7 +13,7 @@ import com.uade.tpo.marketplace.dto.request.ImagenRequest;
 @RequestMapping("/productos")
 public class ProductoController {
 
-    // Id del usuario logueado (el que devuelve /auth/login). Identifica al vendedor que hace la operacion.
+    // Id del usuario logueado (el que devuelve /api/auth/login). Identifica al vendedor que hace la operacion.
     private static final String HEADER_USUARIO = "X-Usuario-Id";
 
     private final ProductoService productoService;
