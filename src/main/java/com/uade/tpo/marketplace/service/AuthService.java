@@ -39,12 +39,13 @@ public class AuthService {
             throw new StateConflictException("Ya existe un usuario registrado con el username: " + request.getUsername());
         }
 
-        Usuario usuario = new Usuario();
-        usuario.setUsername(request.getUsername());
-        usuario.setNombre(request.getNombre());
-        usuario.setApellido(request.getApellido());
-        usuario.setEmail(request.getEmail());
-        usuario.setPassword(passwordEncoder.encode(request.getPassword()));
+        Usuario usuario = Usuario.builder()
+                .username(request.getUsername())
+                .nombre(request.getNombre())
+                .apellido(request.getApellido())
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .build();
 
         Rol rolPorDefecto = rolRepository.findByNombre(ROL_POR_DEFECTO)
                 .orElseGet(() -> rolRepository.save(new Rol(ROL_POR_DEFECTO)));
